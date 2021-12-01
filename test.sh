@@ -124,10 +124,6 @@ if [ "$group_to_run" = "CORE" ] || [ ! "$group_to_run" ]; then executeTestGroup 
 if [ "$group_to_run" = "NO-ADDON" ] || [ ! "$group_to_run" ]; then executeTestGroup "NO-ADDON" "test/no-addon/*.test.js" "$timeout"; fi
 
 #
-# run unit tests without service key (disabled)
-#
-if [ "$group_to_run" = "SOLO" ]  || [ ! "$group_to_run" ]; then executeTestGroup "SOLO" "test/solo/*.test.js" "$timeout"; fi
-#
 # verify that both types of tokens work
 #
 if [ "$group_to_run" = "SWOKEN" ] || [ ! "$group_to_run" ]; then executeTestGroup "SWOKEN" "test/swoken/*.test.js" "$timeout"; fi
