@@ -15,10 +15,6 @@ const opts = {
   name: 'restify-test'
 }
 
-if (semver.satisfies(process.version, '>=18')) {
-  process.exit()
-}
-
 const restify = require('restify')
 
 describe(`probes.restify ${pkg.version}`, function () {
