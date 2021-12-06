@@ -12,7 +12,6 @@ const util = require('util')
 
 const addon = ao.addon
 
-const semver = require('semver')
 const axios = require('axios')
 
 if (process.env.AO_TEST_HTTP !== 'http' && process.env.AO_TEST_HTTP !== 'https') {
@@ -188,7 +187,7 @@ describe(`probes.${p}`, function () {
         axios(
           `${p}://localhost:${port}/foo?bar=baz`,
           function (error, response, body) {
-            expect(response.headers).exist()
+            expect(response.headers).exist()()
             expect(response.headers).property('x-trace')
           }
         )
@@ -415,7 +414,7 @@ describe(`probes.${p}`, function () {
           }
         },
         function (error, response, body) {
-          expect(response.headers).exist
+          expect(response.headers).exist()
           expect(response.headers).property('x-trace')
           expect(origin.taskId).not.equal(response.headers['x-trace'].slice(2, 42))
         })
