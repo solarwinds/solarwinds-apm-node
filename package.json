@@ -1,6 +1,9 @@
 {
   "name": "appoptics-apm",
-  "version": "11.0.0-nh.0",
+  "version": "10.2.2-nh.0",
+  "appoptics": {
+    "version-suffix": "lambda-1"
+  },
   "description": "Agent for AppOptics APM",
   "main": "lib/index.js",
   "files": [
