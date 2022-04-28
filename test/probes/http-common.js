@@ -803,6 +803,7 @@ describe(`probes.${p}`, function () {
         setTimeout(() => {
           // cancel the request
           controller.abort()
+          done()
         }, 500)
       })
     })
