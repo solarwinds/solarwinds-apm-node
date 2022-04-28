@@ -125,7 +125,7 @@ describe(`pino v${version}`, function () {
   })
 
   //
-  // Intercept appoptics messages for analysis
+  // Intercept messages for analysis
   //
   beforeEach(function (done) {
     ao.sampleRate = ao.addon.MAX_SAMPLE_RATE
@@ -133,7 +133,7 @@ describe(`pino v${version}`, function () {
     ao.cfg.insertTraceIdsIntoLogs = true
     ao.probes.fs.enabled = false
 
-    emitter = helper.appoptics(done)
+    emitter = helper.backend(done)
   })
   afterEach(function (done) {
     emitter.close(done)
@@ -225,7 +225,7 @@ describe(`pino v${version}`, function () {
 
     logger.info(message)
 
-    checkEventInfo(eventInfo, level, message, `${'0'.repeat(32)}-0`)
+    checkEventInfo(eventInfo, level, message, `00-${'0'.repeat(32)}-${'0'.repeat(16)}-${'0'.repeat(2)}`)
   })
 
   it('should insert trace IDs in asynchronous instrumented code', function (done) {

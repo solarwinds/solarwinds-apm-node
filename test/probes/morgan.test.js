@@ -18,31 +18,13 @@ const major = semver.major(version)
 
 const { EventEmitter } = require('events')
 
-let debugging = true
+let debugging = false
 
-// if no traceId is passed then don't expect {ao: {traceId}}
-function checkEventInfo (eventInfo, req, res, traceId) {
-  const method = req.method
-  const url = req.url
-  const status = res.statusCode
-  if (debugging) {
-    // eslint-disable-next-line no-console
-    console.log('checkEventInfo()', eventInfo)
-  }
-
-  // eslint-disable-next-line max-len
-  const reString = `${method} ${url} ${status} 42 - \\d+\\.\\d{3} ms( (ao.traceId=[A-F0-9]{32}-(0|1)))?`
+function checkEventInfo (eventInfo, level, message, traceId) {
+  // console.log(eventInfo)
+  const reString = 'trace_id=[a-f0-9]{32} span_id=[a-f0-9]{16} trace_flags=0(0|1)'
   const re = new RegExp(reString)
   const m = eventInfo.match(re)
-  // output some debugging help if these don't match
-  if (!m) {
-    // eslint-disable-next-line no-console
-    console.log('eventInfo', eventInfo, 'match', m)
-  }
-
-  expect(m).ok
-  expect(m.length).equal(4)
-
   if (traceId) {
     const parts = traceId.split('-')
     expect(m[0]).equal(`trace_id=${parts[1]} span_id=${parts[2]} trace_flags=${parts[3]}`)
@@ -74,21 +56,6 @@ class TestStream extends EventEmitter {
     }
   }
 }
-
-//
-// get a trace string via a different function than the logging insertion uses.
-//
-function getTraceIdString () {
-  const topSpan = ao.requestStore.get('topSpan')
-  if (!topSpan) {
-    return `${'0'.repeat(32)}-0`
-  }
-  const firstEvent = topSpan.events.entry.event
-  // 2 task, 16 sample bit, 32 separators
-  return firstEvent.toString(2 | 16 | 32)
-}
-
-const insertModes = [false, true, 'traced', 'sampledOnly', 'always']
 
 //= ================================
 // morgan tests
@@ -178,7 +145,7 @@ describe(`probes.morgan ${version}`, function () {
   })
 
   //
-  // Intercept appoptics messages for analysis
+  // Intercept messages for analysis
   //
   beforeEach(function (done) {
     // make sure we get sampled traces
@@ -189,7 +156,7 @@ describe(`probes.morgan ${version}`, function () {
 
     debugging = false
 
-    emitter = helper.appoptics(done)
+    emitter = helper.backend(done)
   })
 
   afterEach(function (done) {
