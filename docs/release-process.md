@@ -26,7 +26,7 @@ Release of `prerelease` taged packages allows for robust end-to-end testing and 
 ### Agent
 1. Create a prerelease branch (e.g Prerelease-2021-09-22)
 2. **ONLY IF needed** update bindings version to `prerelease`
-  - ```npm install @solarwinds-apm-bindings@prerelease```
+  - ```npm install solarwinds-apm-bindings@prerelease```
   - ```npm install --package-lock-only```
   - ```git commit -am "Updated solarwinds-apm-bindings to prerelease."```
 3. On the branch, bump and tag prerelease version with the `prerelease` tag.
@@ -64,7 +64,7 @@ A release should **always** come after a prerelease. The head of the master bran
 
 ### Bindings
 
-1. Create the release branch (e.g Release-2021-09-22)
+1. Create the release branch (note: must be linked to Jira ticket)
   - ```git checkout -b Release```
 2. Bump  and tag release version
   - ```npm version [<newversion> | major | minor | patch ]```
@@ -77,7 +77,7 @@ A release should **always** come after a prerelease. The head of the master bran
 7. If all workflows complete successfully - Release (via Workflow)
 
 ### Agent
-1. Create the release branch (e.g Release-2021-09-22)
+1. Create the release branch (note: must be linked to Jira ticket)
   - ```git checkout -b Release```
 2. Update [CHANGELOG.md](https://github.com/solarwindscloud/solarwinds-apm-node/blob/main/CHANGELOG.md)
 3. Update bindings version **ONLY IF needed**
