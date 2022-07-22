@@ -59,7 +59,7 @@ Notes:
 
 1. Open a new shell to the dev environment
 
-`docker exec -it -w /usr/src/instrumented dev-agent bash -c "unset SW_APM_REPORTER && unset SW_APM__COLLECTOR && bash"`
+`docker exec -it -w /usr/src/instrumented dev-agent bash -c "unset SW_APM_REPORTER && unset SW_APM_COLLECTOR && bash"`
 
 Note:
 - dev environment uses UDP reporter and a local host collector. The new shell shall use the default (production) instead.

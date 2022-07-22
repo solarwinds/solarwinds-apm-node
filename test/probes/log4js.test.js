@@ -612,7 +612,7 @@ describe(`log4js v${version}`, function () {
 
     log4js.addLayout('json', function (config) {
       return function (logEvent) {
-        logEvent.context = { ...logEvent.context, sw: ao.getTraceObjecForLog() }
+        logEvent.context = { ...logEvent.context, sw: ao.getTraceObjectForLog() }
         return JSON.stringify(logEvent)
       }
     })

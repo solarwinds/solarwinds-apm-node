@@ -47,13 +47,13 @@
     * [.instrumentHttp(span, run, [options], res)](#ao.instrumentHttp) ⇒
     * [.instrument(span, run, [options], [callback])](#ao.instrument) ⇒ <code>value</code>
     * [.pInstrument(span, run, [options])](#ao.pInstrument) ⇒ <code>Promise</code>
-    * [.startOrContinueTrace(traceparent, tracestat, span, runner, [opts], [callback])](#ao.startOrContinueTrace) ⇒ <code>value</code>
-    * [.pStartOrContinueTrace(traceparent, tracestat, span, run, [opts])](#ao.pStartOrContinueTrace) ⇒ <code>Promise</code>
+    * [.startOrContinueTrace(traceparent, tracestate, span, runner, [opts], [callback])](#ao.startOrContinueTrace) ⇒ <code>value</code>
+    * [.pStartOrContinueTrace(traceparent, tracestate, span, run, [opts])](#ao.pStartOrContinueTrace) ⇒ <code>Promise</code>
     * [.reportError(error)](#ao.reportError)
     * [.reportInfo(data)](#ao.reportInfo)
     * ~~[.sendMetric(name, [options])](#ao.sendMetric) ⇒ <code>number</code>~~
     * [.sendMetrics(metrics, [gopts])](#ao.sendMetrics) ⇒ [<code>SendMetricsReturn</code>](#SendMetricsReturn)
-    * [.getTraceObjecForLog()](#ao.getTraceObjecForLog) ⇒ <code>object</code>
+    * [.getTraceObjectForLog()](#ao.getTraceObjectForLog) ⇒ <code>object</code>
     * [.getTraceStringForLog([delimiter])](#ao.getTraceStringForLog) ⇒ <code>string</code>
     * [.wrapLambdaHandler([handler])](#ao.wrapLambdaHandler) ⇒ <code>function</code>
 
@@ -377,7 +377,7 @@ ao.pInstrument(spanInfo, run).then(...)
 ```
 <a name="ao.startOrContinueTrace"></a>
 
-### ao.startOrContinueTrace(traceparent, tracestat, span, runner, [opts], [callback]) ⇒ <code>value</code>
+### ao.startOrContinueTrace(traceparent, tracestate, span, runner, [opts], [callback]) ⇒ <code>value</code>
 Start or continue a trace. Continue is in the sense of continuing a
 trace based on an X-Trace ID received from an external source, e.g.,
 HTTP headers or message queue headers.
@@ -388,7 +388,7 @@ HTTP headers or message queue headers.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | traceparent | <code>string</code> |  | traceparent ID to continue from or null |
-| tracestat | <code>string</code> |  | tracestate ID to continue from or null |
+| tracestate | <code>string</code> |  | tracestate ID to continue from or null |
 | span | <code>string</code> \| [<code>spanInfoFunction</code>](#spanInfoFunction) |  | name or function returning spanInfo |
 | runner | <code>function</code> |  | run this function. sync if no arguments, async if one. |
 | [opts] | <code>object</code> |  | options |
@@ -439,7 +439,7 @@ ao.startOrContinueTrace(
 ```
 <a name="ao.pStartOrContinueTrace"></a>
 
-### ao.pStartOrContinueTrace(traceparent, tracestat, span, run, [opts]) ⇒ <code>Promise</code>
+### ao.pStartOrContinueTrace(traceparent, tracestate, span, run, [opts]) ⇒ <code>Promise</code>
 Start or continue a trace running a function that returns a promise. Continue is in
 the sense of continuing a trace based on an X-Trace ID received from an external
 source, e.g., HTTP headers or message queue headers.
@@ -450,7 +450,7 @@ source, e.g., HTTP headers or message queue headers.
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | traceparent | <code>string</code> |  | traceparent ID to continue from or null |
-| tracestat | <code>string</code> |  | tracestate ID to continue from or null |
+| tracestate | <code>string</code> |  | tracestate ID to continue from or null |
 | span | <code>string</code> \| [<code>spanInfoFunction</code>](#spanInfoFunction) |  | name or function returning spanInfo |
 | run | <code>function</code> |  | the promise-returning function to instrument |
 | [opts] | <code>object</code> |  | options |
@@ -603,9 +603,9 @@ ao.sendMetrics(
   {tags: {class: 'status'}}
 );
 ```
-<a name="ao.getTraceObjecForLog"></a>
+<a name="ao.getTraceObjectForLog"></a>
 
-### ao.getTraceObjecForLog() ⇒ <code>object</code>
+### ao.getTraceObjectForLog() ⇒ <code>object</code>
 Return an object representation of the trace containing trace_id, span_id, trace_flags. The primary intended use for this is
 to insert custom tokens in log packages.
 
@@ -615,7 +615,7 @@ to insert custom tokens in log packages.
 ```js
 log4js.addLayout('json', function (config) {
   return function (logEvent) {
-    logEvent.context = { ...logEvent.context, ...ao.getTraceObjecForLog() }
+    logEvent.context = { ...logEvent.context, ...ao.getTraceObjectForLog() }
     return JSON.stringify(logEvent)
   }
 })
