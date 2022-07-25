@@ -130,7 +130,6 @@ describe('custom (without service key present)', function () {
     assert(ao.traceId === undefined)
     assert(ao.reportError(new Error('xyzzy')) === undefined)
     assert(ao.reportInfo('this is info') === undefined)
-    assert(ao.sendMetric() === -1)
 
     const o = ao.getTraceObjectForLog()
     assert(typeof o === 'object')

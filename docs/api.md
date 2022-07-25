@@ -51,7 +51,6 @@
     * [.pStartOrContinueTrace(traceparent, tracestate, span, run, [opts])](#ao.pStartOrContinueTrace) ⇒ <code>Promise</code>
     * [.reportError(error)](#ao.reportError)
     * [.reportInfo(data)](#ao.reportInfo)
-    * ~~[.sendMetric(name, [options])](#ao.sendMetric) ⇒ <code>number</code>~~
     * [.sendMetrics(metrics, [gopts])](#ao.sendMetrics) ⇒ [<code>SendMetricsReturn</code>](#SendMetricsReturn)
     * [.getTraceObjectForLog()](#ao.getTraceObjectForLog) ⇒ <code>object</code>
     * [.getTraceStringForLog([delimiter])](#ao.getTraceStringForLog) ⇒ <code>string</code>
@@ -501,43 +500,6 @@ Report an info event in the current trace.
 | --- | --- | --- |
 | data | <code>object</code> | Data to report in the info event |
 
-<a name="ao.sendMetric"></a>
-
-### ~~ao.sendMetric(name, [options]) ⇒ <code>number</code>~~
-***Deprecated***
-
-**Kind**: static method of [<code>ao</code>](#ao)  
-**Returns**: <code>number</code> - - (-1) for success else an error code.  
-**Throws**:
-
-- <code>TypeError</code> - if an invalid argument is supplied
-
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| name | <code>string</code> |  | the name of the metric |
-| [options] | <code>object</code> |  |  |
-| [options.count] | <code>number</code> | <code>1</code> | the number of observations being reported |
-| [options.value] | <code>number</code> |  | if present the metric is value based and this                                   is the value, or sum of the values if count is                                   greater than 1 |
-| [options.addHostTag] | <code>boolean</code> |  | add {host: hostname} to tags |
-| [options.tags] | <code>object</code> |  | an object containing {tag: value} pairs |
-
-**Example**  
-```js
-// simplest forms
-ao.sendMetric('my.little.count')
-ao.sendMetric('my.little.value', {value: 234.7})
-
-// report two observations
-ao.sendMetric('my.little.count', {count: 2})
-ao.sendMetric('my.little.value', {count: 2, value: 469.4})
-
-// to supply tags that can be used for filtering
-ao.sendMetric('my.little.count', {tags: {status: error}})
-
-// to have a host name tag added automatically
-ao.sendMetric('my.little.count', {addHostTag: true, tags: {status: error}})
-```
 <a name="ao.sendMetrics"></a>
 
 ### ao.sendMetrics(metrics, [gopts]) ⇒ [<code>SendMetricsReturn</code>](#SendMetricsReturn)
