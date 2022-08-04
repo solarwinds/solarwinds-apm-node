@@ -132,12 +132,7 @@
 |----|----|----|
 | `enabled` | *boolean* | `true` |
 | `collectBacktraces` | *boolean* | `true` |
-
-## mongodb-core
-| Option | Type |Default Value |
-|----|----|----|
-| `enabled` | *boolean* | `true` |
-| `collectBacktraces` | *boolean* | `true` |
+| `sanitizeObject` | *boolean* | `true` |
 
 ## mysql
 | Option | Type |Default Value |

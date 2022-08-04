@@ -24,14 +24,13 @@ if (process.env.CI === 'true' && process.env.TRAVIS === 'true') {
 }
 
 const major = semver.major(pkg.version)
-const moduleName = semver.gte(pkg.version, '5.7.0') ? 'mongodb' : 'mongodb-core'
 
 // use AO_IX if present. It provides a unique ID to prevent collisions
 // during matrix testing. It's not needed when testing only one instance
 // at a time locally.
 const dbn = 'test' + (process.env.AO_IX ? '-' + process.env.AO_IX : '')
 
-describe(`probes/mongoose ${pkg.version} using ${moduleName}`, function () {
+describe(`probes/mongoose ${pkg.version} using mongodb`, function () {
   const mongoOpts = major >= 5 ? { useNewUrlParser: true } : { useMongoClient: true }
 
   const Cat = mongoose.model(dbn, new Schema({
@@ -55,16 +54,17 @@ describe(`probes/mongoose ${pkg.version} using ${moduleName}`, function () {
     apm.sampleRate = apm.addon.MAX_SAMPLE_RATE
     apm.traceMode = 'always'
     // make them more readable
-    backtraces = apm.probes[moduleName].collectBacktraces
-    apm.probes[moduleName].collectBacktraces = false
+    backtraces = apm.probes.mongodb.collectBacktraces
+    apm.probes.mongodb.collectBacktraces = false
     // and don't let file IO complicate the results
     fsenabled = apm.probes.fs.enabled
     apm.probes.fs.enabled = false
     apm.probes.dns.enabled = false
+    apm.probes.mongodb.sanitizeObject = false
   })
   after(function (done) {
     apm.probes.fs.enabled = fsenabled
-    apm.probes[moduleName].collectBacktraces = backtraces
+    apm.probes.mongodb.collectBacktraces = backtraces
     emitter.close(done)
   })
 
@@ -91,12 +91,12 @@ describe(`probes/mongoose ${pkg.version} using ${moduleName}`, function () {
       expect(msg).to.include({ Database: dbn })
     },
     entry: function (msg) {
-      expect(msg).to.include({ Layer: moduleName })
+      expect(msg).to.include({ Layer: 'mongodb' })
       expect(msg).to.include({ Label: 'entry' })
       check.base(msg)
     },
     exit: function (msg) {
-      expect(msg).to.include({ Layer: moduleName })
+      expect(msg).to.include({ Layer: 'mongodb' })
       expect(msg).to.include({ Label: 'exit' })
     }
   }
@@ -295,7 +295,7 @@ describe(`probes/mongoose ${pkg.version} using ${moduleName}`, function () {
     // 2. issue multiple inserts that must be queued because the connection is pending
     // 3. wait for all inserts to complete before issuing the done.
     //
-    it(`should connect and queue queries using a ${type}`, function (realDone) {
+    it.skip(`should connect and queue queries using a ${type}`, function (realDone) {
       const doneCalls = []
       function done (err) {
         doneCalls.push(new Error('done call'))
@@ -371,10 +371,10 @@ describe(`probes/mongoose ${pkg.version} using ${moduleName}`, function () {
         // the key.
         // so this ignores admin database access and exits that edge back to database accesses.
         ignore: function (m) {
-          if (m.Layer === moduleName && m.Database === 'admin' && m.Collection === '$cmd') {
+          if (m.Layer === 'mongodb' && m.Database === 'admin' && m.Collection === '$cmd') {
             return true
           }
-          if (m.Layer === moduleName && m.Label === 'exit') {
+          if (m.Layer === 'mongodb' && m.Label === 'exit') {
             return !(m.Edge in this.opIdMap)
           }
           return false
@@ -432,7 +432,7 @@ describe(`probes/mongoose ${pkg.version} using ${moduleName}`, function () {
     if (m.Edge) {
       text.push(`\n  ${m.Edge}`)
     }
-    if (m.Layer === moduleName && m.Label === 'entry') {
+    if (m.Layer === 'mongodb' && m.Label === 'entry') {
       text.push(`\n  ${m.Spec} - ${m.QueryOp}`)
       if (m.QueryOp === 'insert') {
         const match = m.Insert_Document.match(/"name":".+?"/)
