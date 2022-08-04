@@ -64,7 +64,7 @@ command to invoke your program `node -r esm index.js` then `esm.js` is loaded fi
 If you are using the custom instrumentation SDK then a reference to the SDK must be obtained, 
 like `const apm = require('solarwinds-apm')`. It you  use the command line option to require
 `solarwinds-apm` (e.g. `node -r solarwinds-apm -r esm index.js`) you can access the SDK using
-`const apm = global[Symbol.for('SolarWinds.Apm.Once')]`
+`const apm = global[Symbol.for('solarwinds-apm')]`
 
 ## Configuration
 

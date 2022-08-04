@@ -7,7 +7,7 @@ const path = require('path')
 const helloDotEjs = 'hello.ejs'
 
 const helper = require(path.join(base, 'test/helper'))
-const apm = global[Symbol.for('SolarWinds.Apm.Once')]
+const apm = global[Symbol.for('solarwinds-apm')]
 
 const axios = require('axios')
 

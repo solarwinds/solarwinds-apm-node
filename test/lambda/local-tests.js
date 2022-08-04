@@ -87,7 +87,7 @@ function fakeLambdaCallbacker (event, context, callback) {
 // requested function.
 //
 
-const aos = Symbol.for('SolarWinds.Apm.Once')
+const aos = Symbol.for('solarwinds-apm')
 
 module.exports = {
   // look in the context data for this symbol for additional instructions.
