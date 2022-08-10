@@ -274,7 +274,7 @@ describe('sqlSanitizer aggressive cleanup when \' involved', function () {
   })
 })
 
-describe('sqlSanitizer drop double quotes when option is true', function () {
+describe('sqlSanitizer sanitize double quotes when option is true', function () {
   it('should sanitizes a in list', function () {
     const sql = 'SELECT "game_types".* FROM "game_types" WHERE "game_types"."game_id" IN (1162)'
     const result = sqlSanitizer.sanitize(sql, true)
@@ -308,7 +308,7 @@ describe('sqlSanitizer drop double quotes when option is true', function () {
   })
 })
 
-describe('sqlSanitizer not drop double quotes when option is false', function () {
+describe('sqlSanitizer sanitize double quotes when option is false', function () {
   // cases from: https://github.com/open-telemetry/opentelemetry-java-instrumentation/issues/4593
   // our sanitier is EXPECTED to be overly aggressive
   it('should sanitizes double quoted field names in string (aggressive on SQL92)', function () {
