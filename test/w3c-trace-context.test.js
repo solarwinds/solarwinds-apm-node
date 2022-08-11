@@ -607,6 +607,108 @@ describe('w3cTraceContext', function () {
     })
   })
 
+  describe('w3cTraceContext.fromHeaders info liboboeTracestate', function () {
+    it('should be valid when traceparent and tracestate do not match', function () {
+      const myHeaders = {
+        traceparent: baseTraceparent,
+        tracestate: otherTracestateOrgPart
+      }
+      const id = w3cTraceContext.fromHeaders(myHeaders).liboboeTracestate
+
+      expect(id).to.be.equal('9999888855667788-01')
+    })
+
+    it('should be empty when tracestate is malformed (too long)', function () {
+      const myHeaders = {
+        traceparent: baseTraceparent,
+        tracestate: baseTracestateOrgPart.slice(0, 2) + '1' + baseTracestateOrgPart.slice(2)
+      }
+      const id = w3cTraceContext.fromHeaders(myHeaders).liboboeTracestate
+
+      expect(id).to.be.equal('')
+    })
+
+    it('should be empty when tracestate is malformed (too short)', function () {
+      const myHeaders = {
+        traceparent: baseTraceparent,
+        tracestate: baseTracestateOrgPart.slice(0, 6) + baseTracestateOrgPart.slice(7)
+      }
+      const id = w3cTraceContext.fromHeaders(myHeaders).liboboeTracestate
+
+      expect(id).to.be.equal('')
+    })
+
+    it('should be empty when tracestate is malformed (no dash)', function () {
+      const myHeaders = {
+        traceparent: baseTraceparent,
+        tracestate: baseTracestateOrgPart.replace('-', '_')
+      }
+      const id = w3cTraceContext.fromHeaders(myHeaders).liboboeTracestate
+
+      expect(id).to.be.equal('')
+    })
+
+    it('should be empty when tracestate is malformed (not hex)', function () {
+      const myHeaders = {
+        traceparent: baseTraceparent,
+        tracestate: baseTracestateOrgPart.replace('a', 'z')
+      }
+      const id = w3cTraceContext.fromHeaders(myHeaders).liboboeTracestate
+
+      expect(id).to.be.equal('')
+    })
+
+    it('should be valid when tracestate is with other vendor and own data', function () {
+      const myHeaders = {
+        traceparent: baseTraceparent,
+        tracestate: 'a1=continue_from_me,' + baseTracestateOrgPart + ',a2=i_was_before'
+      }
+      const id = w3cTraceContext.fromHeaders(myHeaders).liboboeTracestate
+
+      expect(id).to.be.equal(baseTracestateSpanId + '-' + baseTracestateFlags)
+    })
+
+    it('should be first valid when tracestate is malformed and contains own twice', function () {
+      const myHeaders = {
+        traceparent: baseTraceparent,
+        tracestate: baseTracestateOrgPart + ',sw=77771111aaaa0011-01'
+      }
+      const id = w3cTraceContext.fromHeaders(myHeaders).liboboeTracestate
+
+      expect(id).to.be.equal(baseTracestateSpanId + '-' + baseTracestateFlags)
+    })
+
+    it('should be first when tracestate is with other vendor and own data twice', function () {
+      const myHeaders = {
+        traceparent: baseTraceparent,
+        tracestate: 'a1=continue_from_me,' + baseTracestateOrgPart + ',a2=i_was_before,sw=77771111aaaa0011-01'
+      }
+      const id = w3cTraceContext.fromHeaders(myHeaders).liboboeTracestate
+
+      expect(id).to.be.equal(baseTracestateSpanId + '-' + baseTracestateFlags)
+    })
+
+    it('should be empty when tracestate is with other vendor data only', function () {
+      const myHeaders = {
+        traceparent: baseTraceparent,
+        tracestate: 'a1=continue_from_me,a2=i_was_before'
+      }
+      const id = w3cTraceContext.fromHeaders(myHeaders).liboboeTracestate
+
+      expect(id).to.be.equal('')
+    })
+
+    it('should be empty when there is no tracestate', function () {
+      const myHeaders = {
+        traceparent: baseTraceparent,
+        tracestate: 'a1=continue_from_me,a2=i_was_before'
+      }
+      const id = w3cTraceContext.fromHeaders(myHeaders).liboboeTracestate
+
+      expect(id).to.be.equal('')
+    })
+  })
+
   describe('w3cTraceContext.padding', function () {
     it('should have a default value of 00000000', function () {
       expect(w3cTraceContext.padding).to.be.equal('00000000')
