@@ -29,7 +29,7 @@ Building with node-gyp (via node-pre-gyp) requires:
 - make
 - A proper C/C++ compiler toolchain, like GCC
 
-## Installation
+## Installing
 
 The `solarwinds-apm` module is [available on npm](http://npmjs.org/package/solarwinds-apm) and can be installed
 by navigating to your app root and running:
@@ -38,6 +38,9 @@ by navigating to your app root and running:
 npm install --save solarwinds-apm
 ```
 
+## Authorizing
+
+
 The agent requires a service key, obtained from the SolarWinds dashboard. This is set via the `SW_APM_SERVICE_KEY` environment variable, make
 sure it is available in the environment where your application is running:
 
@@ -45,23 +48,35 @@ sure it is available in the environment where your application is running:
 export SW_APM_SERVICE_KEY="api-token-here:your-service-name"
 ```
 
-Then require `solarwinds-apm` as part of your application start command, or via a `require()` call in the entry point file before any other `require()` calls. 
+A service key is composed of an API token and the name of the service you're installing on. The SolarWinds platform onboarding flow provides the full service key.
+
+
+## Loading
+
+To load the agent into your application you can use one of two methods: require `solarwinds-apm` in your application start command (run time), or require `solarwinds-apm` in your entry point file before any other `require()` calls (build time).
+
 
 Below are simple examples:
 
-**Run Time (preferred)**
-```
+**At Start (preferred)**
+```bash
 node -r solarwinds-apm <app.js>
 ```
 
-**Build Time**
-```
+**In Code**
+```js
+// must be first require
 require('solarwinds-apm')
+
+const express = require('express')
+const app = express()
+app.get('/', (req, res) => res.send('Hello World!'))
+app.listen(3000, () => console.log('Example app listening on port 3000!'))
 ```
 
 Now restart your app and you should see data in your SolarWinds dashboard in a minute or two.
 
-## Important!
+### Important!
 
 `solarwinds-apm` should be the first file required. 
 
