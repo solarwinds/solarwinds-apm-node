@@ -68,7 +68,7 @@ Now restart your app and you should see data in your SolarWinds dashboard in a m
 If, for example, you are using the `esm` package to enable ES module syntax (import rather than require) and you use the following
 command to invoke your program `node -r esm index.js` then `esm.js` is loaded first and `solarwinds-apm` is unable to instrument modules. You can use it, just make sure to require `solarwinds-apm` first, e.g., `node -r solarwinds-apm -r esm index.js`.
 
-If you are using the custom instrumentation SDK then a reference to the SDK must be obtained,  like `const apm = require('solarwinds-apm')`. It you  use the command line option to require `solarwinds-apm` (e.g. `node -r solarwinds-apm -r esm index.js`) you can access the SDK using `const apm = global[Symbol.for('solarwinds-apm')]`
+If you are using the custom instrumentation SDK then a reference to the SDK must be obtained,  like `const apm = require('solarwinds-apm')`. If you use the command line option to require `solarwinds-apm` (e.g. `node -r solarwinds-apm -r esm index.js`) you can access the SDK using `const apm = global[Symbol.for('solarwinds-apm')]`
 
 ## Configuration
 
