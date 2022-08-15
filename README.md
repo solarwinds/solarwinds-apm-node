@@ -3,11 +3,8 @@
 The `solarwinds-apm` module provides [SolarWinds](https://www.solarwinds.com) instrumentation for Node.js.
 
 It supports most commonly used databases, frameworks, and packages automatically. An
-API allows anything to be instrumented.
+API (a.k.a Custom SDK) allows anything to be instrumented. A [SolarWinds](https://www.solarwinds.com) account is required to view traces & metrics.
 
-A [SolarWinds](https://www.solarwinds.com) account is required to view traces & metrics.
-Accounts are [free](https://www.solarwinds.com) for development and testing use. For production usage a [free trial](https://www.solarwinds.com)
-is a great way to start.
 
 ## Dependencies
 
