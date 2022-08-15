@@ -21,7 +21,7 @@ It is dependent on [solarwinds-apm-bindings](https://github.com/solarwindscloud/
 
 The SolarWinds APM Agent will first attempt to install a prebuilt binary add-on using [node-pre-gyp](https://github.com/mapbox/node-pre-gyp). Prebuilt binaries are provided for various versions of Alpine, Centos, Amazon Linux and Red Hat Enterprise Linux.
 
-Only if finding an appropriate prebuilt binary fails, will the agent attempt to build the binary add-on from source using [node-gyp](https://github.com/nodejs/node-gyp#on-unix). In such a case, the target platform suld include the build toolchain.
+Only if finding an appropriate prebuilt binary fails, will the agent attempt to build the binary add-on from source using [node-gyp](https://github.com/nodejs/node-gyp#on-unix). In such a case, the target platform should include the build toolchain.
 
 Building with node-gyp (via node-pre-gyp) requires:
 
