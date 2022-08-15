@@ -295,7 +295,7 @@ describe(`probes/mongoose ${pkg.version} using mongodb`, function () {
     // 2. issue multiple inserts that must be queued because the connection is pending
     // 3. wait for all inserts to complete before issuing the done.
     //
-    it.skip(`should connect and queue queries using a ${type}`, function (realDone) {
+    it(`should connect and queue queries using a ${type}`, function (realDone) {
       const doneCalls = []
       function done (err) {
         doneCalls.push(new Error('done call'))

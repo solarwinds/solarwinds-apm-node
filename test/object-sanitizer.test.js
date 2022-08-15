@@ -18,7 +18,9 @@ describe('objectSanitizer basic', function () {
   })
 
   it('should sanitizes double quoted strings', function () {
-    const obj = { a: 'hide', b: 'me' }
+    /* eslint-disable */
+    const obj = { a: "hide", b: "me" }
+    /* eslint-enable */
     const result = objectSanitizer.sanitize(obj)
     expect(JSON.stringify(result)).equal(JSON.stringify({ a: '?', b: '?' }))
   })
