@@ -385,7 +385,7 @@ describe(`probes.${p}`, function () {
         function (msg) {
           // the edge in "Continuation" is from tracestate.
           expect(msg).property('Edge', otherTracestateOrgPart.slice(3).split('-')[0].toUpperCase())
-          expect(msg).property('sw.tracestate_parent_id')
+          expect(msg).property('sw.tracestate_parent_id', otherTracestateOrgPart.slice(3, -3))
         },
         function (msg) {
           check.server.exit(msg)

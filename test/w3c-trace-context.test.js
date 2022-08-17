@@ -598,8 +598,7 @@ describe('w3cTraceContext', function () {
 
     it('should be empty when there is no tracestate', function () {
       const myHeaders = {
-        traceparent: baseTraceparent,
-        tracestate: 'a1=continue_from_me,a2=i_was_before'
+        traceparent: baseTraceparent
       }
       const id = w3cTraceContext.fromHeaders(myHeaders).savedSpanId
 
@@ -700,8 +699,7 @@ describe('w3cTraceContext', function () {
 
     it('should be empty when there is no tracestate', function () {
       const myHeaders = {
-        traceparent: baseTraceparent,
-        tracestate: 'a1=continue_from_me,a2=i_was_before'
+        traceparent: baseTraceparent
       }
       const id = w3cTraceContext.fromHeaders(myHeaders).liboboeTracestate
 
