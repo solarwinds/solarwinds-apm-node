@@ -12,7 +12,7 @@ If you were using `appoptics-apm` out-of-the-box with **no** custom instrumentat
 
 There are two main changes to the API:
 
-- Agent now support W3C Trace Context propagation. Due to the implementation chosen, the `startOrContinueTrace` and `getTraceSettings` API functions now expect a `traceparent` and `tracestate` duo rather than a single `xtrace` value. This change will affect any custom instrumentation that uses the above mentioned API functions. The "tracestate" expected is in the format of spanId dash flags (e.g. `77771111aaaa0011-01`) and should either be taken from the `sw` vendor entry in the incoming `tracestate` header or set to `null` if none.
+- Agent now supports W3C Trace Context propagation. Due to the implementation chosen, the `startOrContinueTrace` and `getTraceSettings` API functions now expect a `traceparent` and `tracestate` duo rather than a single `xtrace` value. This change will affect any custom instrumentation that uses the above mentioned API functions. The "tracestate" expected is in the format of spanId dash flags (e.g. `77771111aaaa0011-01`) and should either be taken from the `sw` vendor entry in the incoming `tracestate` header or set to `null` if none.
 
 - Logging API has been simplified and adapted to match W3C Trace Context in logs. There are now two methods: `getTraceObjectForLog` and `getTraceStringForLog` they return either an object or a delimited string containing three values `trace_id`, `span_id` and `trace_flags`.
 
