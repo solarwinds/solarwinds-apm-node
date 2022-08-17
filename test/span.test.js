@@ -27,7 +27,7 @@ describe('span', function () {
   before(function (done) {
     emitter = helper.backend(done)
     apm.sampleRate = addon.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
     // don't count from any previous tests.
     apm._stats.span.totalCreated = 0
     apm._stats.span.topSpansCreated = 0

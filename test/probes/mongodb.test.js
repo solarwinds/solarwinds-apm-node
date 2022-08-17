@@ -42,7 +42,7 @@ describe('probes.mongodb UDP', function () {
   before(function (done) {
     emitter = helper.backend(done)
     apm.sampleRate = apm.addon.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
     apm.g.testing(__filename)
   })
   after(function (done) {
@@ -98,7 +98,7 @@ function makeTests (db_host, host, isReplicaSet) {
     apm.probes.fs.enabled = false
     apm.probes.dns.enabled = false
     apm.sampleRate = addon.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
     apm.probes.mongodb.collectBacktraces = false
     emitter = helper.backend(function () {
       done()

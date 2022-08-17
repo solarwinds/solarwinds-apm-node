@@ -52,7 +52,7 @@ describe(`probes/mongoose ${pkg.version} using mongodb`, function () {
   before(function (done) {
     emitter = helper.backend(done)
     apm.sampleRate = apm.addon.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
     // make them more readable
     backtraces = apm.probes.mongodb.collectBacktraces
     apm.probes.mongodb.collectBacktraces = false

@@ -181,7 +181,7 @@ describe(`bunyan v${version}`, function () {
   beforeEach(function (done) {
     // make sure we get sampled traces
     apm.sampleRate = apmb.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
     // default to the simple 'true'
     apm.cfg.insertTraceIdsIntoLogs = true
     apm.probes.fs.enabled = false

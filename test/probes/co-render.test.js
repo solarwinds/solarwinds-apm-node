@@ -35,7 +35,7 @@ describe(`probes/co-render ${pkg.version}`, function () {
     apm.probes.fs.enabled = false
     emitter = helper.backend(done)
     apm.sampleRate = apm.addon.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
     apm.g.testing(__filename)
   })
   after(function (done) {

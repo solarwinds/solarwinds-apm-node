@@ -43,7 +43,7 @@ describe(`probes.${p} websocket`, function () {
 
   before(function (done) {
     apm.sampleRate = addon.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
     apm.g.testing(__filename)
     // intercept message for analysis
     emitter = helper.backend(done)

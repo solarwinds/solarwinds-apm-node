@@ -207,7 +207,7 @@ describe(`winston v${version}`, function () {
   //
   beforeEach(function (done) {
     apm.sampleRate = apm.addon.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
     apm.cfg.insertTraceIdsIntoLogs = true
 
     emitter = helper.backend(done)

@@ -57,7 +57,7 @@ describe(`probes.${p}`, function () {
   before(function (done) {
     emitter = helper.backend(done)
     apm.sampleRate = addon.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
     apm.g.testing(__filename)
   })
   after(function (done) {

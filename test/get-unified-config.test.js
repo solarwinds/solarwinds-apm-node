@@ -237,9 +237,12 @@ describe('get-unified-config', function () {
       doChecks(cfg, { global: expected, fatals })
     })
 
-    it('should warn about deprecated config file keys', function () {
+    // there are no deprecated config options as of now.
+    // the functionality is still available.
+    // so keep test example but skip it
+    it.skip('should warn about deprecated config file keys', function () {
       const config = {
-        traceMode: 'always',
+        traceMode: 'always', // this was a deprecated setting but it no longer is.
         sampleRate: 1000000
       }
       writeConfigJSON(config)
@@ -310,9 +313,7 @@ describe('get-unified-config', function () {
 
       const cfg = guc()
 
-      const warnings = [
-        'traceMode is deprecated; it will be invalid in the future'
-      ]
+      const warnings = []
       const overrides = {
         file: `${process.cwd()}/${file}`,
         global: expected,
