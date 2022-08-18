@@ -33,7 +33,7 @@ describe(`probes.restify ${pkg.version}`, function () {
   before(function (done) {
     emitter = helper.backend(done)
     apm.sampleRate = apm.addon.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
     // restify newer versions of restify use negotiator which does file io
     fsState = apm.probes.fs.enabled
     apm.probes.fs.enabled = false

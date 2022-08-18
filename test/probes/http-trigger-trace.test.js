@@ -357,7 +357,7 @@ describe('probes.http trigger-trace', function () {
     // setup to handle messages
     emitter = helper.backend(done)
     apm.sampleRate = addon.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
 
     // set the testing context for debugging tests.
     apm.g.testing(__filename)

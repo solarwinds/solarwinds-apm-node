@@ -109,7 +109,7 @@ describe('custom', function () {
   //
   beforeEach(function (done) {
     apm.sampleRate = apmb.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
     emitter = helper.backend(done)
   })
   afterEach(function (done) {

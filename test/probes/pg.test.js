@@ -59,7 +59,7 @@ describe(`probes.pg ${pkg.version} pg-native ${nativeVer}`, function () {
 
     emitter = helper.backend(done)
     apm.sampleRate = apm.addon.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
     apm.probes.fs.enabled = false
     apm.probes.dns.enabled = false
   })

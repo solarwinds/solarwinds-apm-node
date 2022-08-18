@@ -129,7 +129,7 @@ describe(`pino v${version}`, function () {
   //
   beforeEach(function (done) {
     apm.sampleRate = apm.addon.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
     apm.cfg.insertTraceIdsIntoLogs = true
     apm.probes.fs.enabled = false
 

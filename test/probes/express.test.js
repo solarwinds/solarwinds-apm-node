@@ -86,7 +86,7 @@ describe('probes.express ' + pkg.version, function () {
     apm.probes.express.collectBacktraces = false
     apm.probes.fs.enabled = false
     apm.sampleRate = apm.addon.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
     emitter = helper.backend(done)
     apm.g.testing(__filename)
   })

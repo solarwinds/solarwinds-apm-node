@@ -24,12 +24,6 @@ if (apm.addon) {
 
 describe('basics', function () {
   it('should set trace mode as string or integer and always get a string', function () {
-    apm.traceMode = 'never'
-    expect(apm.traceMode).equal('disabled')
-
-    apm.traceMode = 'always'
-    expect(apm.traceMode).equal('enabled')
-
     apm.traceMode = 0
     expect(apm.traceMode).equal('disabled')
 
@@ -101,7 +95,7 @@ describe('basics', function () {
   it('should support sampling using getTraceSettings()', function () {
     const skipSample = apm.skipSample
     apm.skipSample = false
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
     apm.sampleRate = MAX_SAMPLE_RATE
     let s = apm.getTraceSettings()
     expect(s).to.not.be.false
@@ -118,7 +112,7 @@ describe('basics', function () {
 
   ifapmb('should not call sampleRate setter from sample function', function () {
     apm.sampleRate = apm.addon.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
     const skipSample = apm.skipSample
     apm.skipSample = false
 

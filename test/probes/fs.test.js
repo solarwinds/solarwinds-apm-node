@@ -76,7 +76,7 @@ describe('probes.fs', function () {
   before(function (done) {
     emitter = helper.backend(done)
     apm.sampleRate = apm.addon.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
   })
   after(function (done) {
     emitter.close(done)

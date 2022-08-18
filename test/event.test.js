@@ -22,7 +22,7 @@ describe('event', function () {
   before(function (done) {
     emitter = helper.backend(done)
     apm.sampleRate = apmb.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
   })
   after(function (done) {
     emitter.close(done)
@@ -82,7 +82,7 @@ describe('event', function () {
     expect(apm.sampling(event.toString())).equal(false)
 
     apm.sampleRate = apmb.MAX_SAMPLE_RATE
-    apm.traceMode = 'always'
+    apm.traceMode = 'enabled'
     ev0 = apmb.Event.makeRandom(1)
     event = new Event('test', 'entry', ev0)
 
