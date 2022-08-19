@@ -376,6 +376,42 @@ describe(`probes.${p}`, function () {
       })
     })
 
+    it('should continue "Continuation" tracing when receiving a traceparent and complex tracestate that do not match in header', function (done) {
+      const server = createServer(options, function (req, res) {
+        res.end('done')
+      })
+
+      helper.doChecks(emitter, [
+        function (msg) {
+          // the edge in "Continuation" is from tracestate.
+          expect(msg).property('Edge', otherTracestateOrgPart.slice(3).split('-')[0].toUpperCase())
+          expect(msg).property('sw.tracestate_parent_id', otherTracestateOrgPart.slice(3, -3))
+        },
+        function (msg) {
+          check.server.exit(msg)
+        }
+      ], function () {
+        server.close()
+      })
+
+      server.listen(function () {
+        const port = server.address().port
+        axios({
+          url: `${p}://localhost:${port}`,
+          headers: {
+            traceparent: baseTraceparent,
+            tracestate: `ot=something-other-people-like,${otherTracestateOrgPart}`
+          }
+        }).then(function (response) {
+          expect(response.headers).property('x-trace')
+          expect(baseTraceparent.slice(0, 35)).equal(response.headers['x-trace'].slice(0, 35))
+          done()
+        }).catch(function (err) {
+          done(err)
+        })
+      })
+    })
+
     //
     // Verify always trace mode forwards sampling data
     //
