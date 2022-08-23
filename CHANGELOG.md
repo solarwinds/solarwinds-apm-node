@@ -12,6 +12,7 @@ Features
 - Add auto instrumentation of Node's native DNS module.
 - Add auto instrumentation to the promise interface of Node's native fs module.
 - Add auto instrumentation log4js package.
+- Updates and fixes mongodb probe to support db versions 2.6, 3, 4, 5 and both legacy and and latest drivers.
 - Upgrade tedious (MS SQL) probe to support latest.
 - Upgrade pino logging probe to support latest.
 
@@ -19,8 +20,10 @@ Maintenance
 - Refactor the logging probes API simplifying both api methods and configuration settings.
 - Refactor the morgan probe simplifying implementation and improving functionality.
 - Change naming of headers and reported KV pairs for Trigger Trace requests.
+- Change documented API Object Name to apm and global symbol to solarwinds-apm.
 - Update http/s probe KV pairs.
 - Improve SQL Sanitization moving it form Bindings to Agent.
+- Added ability to remove Double Quoted values during SQL Sanitization.
 - Remove array-flatten from dependencies.
 - Remove methods from dependencies.
 - Remove minimist from dependencies.
@@ -48,3 +51,4 @@ Bug fix
 - Fix the q probe to only binds when tracing.
 - Resolve circular dependencies.
 - Always masks the Service Key.
+- Removes untrue warning that traceMode config setting is deprecated.
