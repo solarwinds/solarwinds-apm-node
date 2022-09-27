@@ -3,6 +3,7 @@
   "version": "11.1.0",
   "description": "Agent for SolarWinds APM",
   "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
   "files": [
     "lib",
     "solarwinds-apm-config.json",
@@ -55,6 +56,9 @@
   "devDependencies": {
     "@hapi/hapi": "^20.1.5",
     "@hapi/vision": "^6.1.0",
+    "@types/aws-lambda": "^8.10.106",
+    "@types/cls-hooked": "^4.3.3",
+    "@types/debug": "^4.1.7",
     "amqplib": "^0.8.0",
     "aws-sdk": "^2.1057.0",
     "axios": "^0.26.1",
