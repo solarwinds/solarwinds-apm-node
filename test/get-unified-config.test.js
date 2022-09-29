@@ -18,7 +18,8 @@ const expectedGlobalDefaults = {
   traceMode: 1,
   logLevel: 2,
   runtimeMetrics: true,
-  unifiedLogging: 'preferred'
+  unifiedLogging: 'preferred',
+  metricFormat: 0
 }
 
 const expectedProbeDefaults = require(`${relativeDir}/lib/probe-defaults`)
@@ -442,7 +443,7 @@ describe('get-unified-config', function () {
   describe('environment variable handling', function () {
     it('should correctly handle env vars with explicit names', function () {
       process.env.SW_APM_DEBUG_LEVEL = 4
-      process.env.SW_APM_COLLECTOR = 'collector-stg.appoptics.com'
+      process.env.SW_APM_COLLECTOR = 'apm.collector.st-ssp.solarwinds.com'
       process.env.SW_APM_TRUSTEDPATH = './certs/special.cert'
 
       const cfg = guc()
