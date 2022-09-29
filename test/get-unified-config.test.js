@@ -658,6 +658,45 @@ describe('get-unified-config', function () {
       doChecks(cfg, expected)
     })
   })
+
+  //
+  // metric format
+  //
+  describe('metricFormat', function () {
+    it('should default to 0 when no endpoint is specified', function () {
+      const cfg = guc()
+
+      const expected = { metricFormat: 0 }
+      doChecks(cfg, { global: expected })
+    })
+
+    it('should default to 0 when a non-appoptics endpoint is specified', function () {
+      const endpoint = 'apm.collector.st-ssp.solarwinds.com'
+      process.env.SW_APM_COLLECTOR = endpoint
+      const cfg = guc()
+
+      const expected = { metricFormat: 0, endpoint }
+      doChecks(cfg, { global: expected })
+    })
+
+    it('should default to 1 when an appoptics endpoint is specified', function () {
+      const endpoint = 'collector.appoptics.com'
+      process.env.SW_APM_COLLECTOR = endpoint
+      const cfg = guc()
+
+      const expected = { metricFormat: 1, endpoint }
+      doChecks(cfg, { global: expected })
+    })
+
+    it('should override the default if provided explicitely', function () {
+      process.env.SW_APM_METRIC_FORMAT = '1'
+      const cfg = guc()
+
+      const expected = { metricFormat: 1 }
+      doChecks(cfg, { global: expected })
+    })
+  })
+
   //
   // probes
   //
