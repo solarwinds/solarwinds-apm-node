@@ -1,7 +1,6 @@
 services:
   dev-agent:
     container_name: dev-agent
-    image: dev-agent
     build:
       context: .
       dockerfile: Dockerfile
@@ -57,24 +56,28 @@ services:
 
   # Containers required for testing supported probes
   cassandra:
+    platform: linux/amd64
     container_name: "cassandra"
     image: cassandra:2 
     ports:
       - "9042:9042"
 
   memcached:
+    platform: linux/amd64
     container_name: "memcached"
     image: memcached 
     ports:
       - "11211:11211"
 
   mongo_2_6:
+    platform: linux/amd64
     container_name: "mongo_2_6"
     image: mongo:2.6 
     ports:
       - "27017:27017"
 
   mongo_3:
+    platform: linux/amd64
     container_name: "mongo_3"
     image: mongo:3 
     ports:
@@ -82,6 +85,7 @@ services:
       - "27018:27017"
 
   mongo_4:
+    platform: linux/amd64
     container_name: "mongo_4"
     image: mongo:4 
     ports:
@@ -89,12 +93,14 @@ services:
       - "27019:27017"
 
   mongo_5:
+    platform: linux/amd64
     container_name: "mongo_5"
     image: mongo:5 
     ports:
       # host:container
       - "27020:27017"
   mssql:
+    platform: linux/amd64
     container_name: "mssql"
     image: "mcr.microsoft.com/mssql/server:2017-CU8-ubuntu"
     ports:
@@ -104,6 +110,7 @@ services:
       - SA_PASSWORD=MeetSQL2017requirements!
 
   mysql:
+    platform: linux/amd64
     container_name: "mysql_5_7"
     image: "mysql:5.7.13"
     ports:
@@ -112,12 +119,14 @@ services:
       - MYSQL_ROOT_PASSWORD=admin
 
   oracle:
+    platform: linux/amd64
     container_name: "oracle"
     image: "traceqa/oracle-express" # traceqa is a SolarWinds account
     ports:
       - "1521:1521"
 
   postgres:
+    platform: linux/amd64
     container_name: "postgres"
     image: "postgres"
     ports:
@@ -126,6 +135,7 @@ services:
       - POSTGRES_PASSWORD=xyzzy
 
   rabbitmq:
+    platform: linux/amd64
     container_name: "rabbitmq" 
     image: rabbitmq:3-management 
     ports:
@@ -133,6 +143,7 @@ services:
       - "5671:5671"
 
   redis:
+    platform: linux/amd64
     container_name: "redis"
     image: redis  
     ports:

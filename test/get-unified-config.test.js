@@ -18,7 +18,8 @@ const expectedGlobalDefaults = {
   traceMode: 1,
   logLevel: 2,
   runtimeMetrics: true,
-  unifiedLogging: 'preferred'
+  unifiedLogging: 'preferred',
+  metricFormat: 0
 }
 
 const expectedProbeDefaults = require(`${relativeDir}/lib/probe-defaults`)
@@ -442,7 +443,7 @@ describe('get-unified-config', function () {
   describe('environment variable handling', function () {
     it('should correctly handle env vars with explicit names', function () {
       process.env.SW_APM_DEBUG_LEVEL = 4
-      process.env.SW_APM_COLLECTOR = 'collector-stg.appoptics.com'
+      process.env.SW_APM_COLLECTOR = 'apm.collector.st-ssp.solarwinds.com'
       process.env.SW_APM_TRUSTEDPATH = './certs/special.cert'
 
       const cfg = guc()
@@ -658,6 +659,45 @@ describe('get-unified-config', function () {
       doChecks(cfg, expected)
     })
   })
+
+  //
+  // metric format
+  //
+  describe('metricFormat', function () {
+    it('should default to 0 when no endpoint is specified', function () {
+      const cfg = guc()
+
+      const expected = { metricFormat: 0 }
+      doChecks(cfg, { global: expected })
+    })
+
+    it('should default to 0 when a non-appoptics endpoint is specified', function () {
+      const endpoint = 'apm.collector.st-ssp.solarwinds.com'
+      process.env.SW_APM_COLLECTOR = endpoint
+      const cfg = guc()
+
+      const expected = { metricFormat: 0, endpoint }
+      doChecks(cfg, { global: expected })
+    })
+
+    it('should default to 1 when an appoptics endpoint is specified', function () {
+      const endpoint = 'collector.appoptics.com'
+      process.env.SW_APM_COLLECTOR = endpoint
+      const cfg = guc()
+
+      const expected = { metricFormat: 1, endpoint }
+      doChecks(cfg, { global: expected })
+    })
+
+    it('should override the default if provided explicitely', function () {
+      process.env.SW_APM_METRIC_FORMAT = '1'
+      const cfg = guc()
+
+      const expected = { metricFormat: 1 }
+      doChecks(cfg, { global: expected })
+    })
+  })
+
   //
   // probes
   //
