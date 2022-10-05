@@ -33,7 +33,6 @@ const loggers: typeof log.loggers
  * Key-value data which can be used as tags for the collector
  */
 interface KVData {
-  error: Error | string | number | boolean
   [key: string]: Error | string | number | boolean
 }
 
