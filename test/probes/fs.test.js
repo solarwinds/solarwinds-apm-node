@@ -694,4 +694,56 @@ describe('probes.fs', function () {
       }
     ], reset)
   })
+
+  it('should suppress promises/open errors when requested', function (done) {
+    const previousIgnoreErrors = apm.probes.fs.ignoreErrors
+    apm.probes.fs.ignoreErrors = { open: { ENOENT: true } }
+    function reset (err) {
+      apm.probes.fs.ignoreErrors = previousIgnoreErrors
+      done(err)
+    }
+    helper.test(emitter, function (done) {
+      fs.promises.open('does-not-exist', 'r')
+        .then(() => done())
+        .catch(() => done())
+    }, [
+      function (msg) {
+        checks.entry(msg)
+        expect(msg).property('Operation', 'open')
+        expect(msg).property('FilePath', 'does-not-exist')
+      },
+      function (msg) {
+        checks.exit(msg)
+        expect(msg).not.property('ErrorClass')
+        expect(msg).not.property('Backtrace')
+        expect(msg).not.property('ErrorMsg')
+      }
+    ], reset)
+  })
+
+  it('should suppress promises/stat errors when requested', function (done) {
+    const previousIgnoreErrors = apm.probes.fs.ignoreErrors
+    apm.probes.fs.ignoreErrors = { stat: { ENOENT: true } }
+    function reset (err) {
+      apm.probes.fs.ignoreErrors = previousIgnoreErrors
+      done(err)
+    }
+    helper.test(emitter, function (done) {
+      fs.promises.stat('does-not-exist', 'r')
+        .then(() => done())
+        .catch(() => done())
+    }, [
+      function (msg) {
+        checks.entry(msg)
+        expect(msg).property('Operation', 'stat')
+        expect(msg).property('FilePath', 'does-not-exist')
+      },
+      function (msg) {
+        checks.exit(msg)
+        expect(msg).not.property('ErrorClass')
+        expect(msg).not.property('Backtrace')
+        expect(msg).not.property('ErrorMsg')
+      }
+    ], reset)
+  })
 })
