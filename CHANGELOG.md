@@ -2,7 +2,7 @@
 
 v11.0.0 is the first SolarWinds APM version. Versions prior to v11.0.0 were branded AppOptics APM. See: https://github.com/appoptics/appoptics-apm-node/blob/master/CHANGELOG.md
 
-### Unreleased
+### v11.1.0
 
 Features
 - Add `metricFormat` configuration option for advanced use.
