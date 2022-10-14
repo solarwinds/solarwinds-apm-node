@@ -13,6 +13,7 @@
     "test": "./test.sh",
     "test:core": "./test.sh CORE",
     "test:probes": "./test.sh PROBES",
+    "test:types": "./test.sh TYPES",
     "docs:api": "cat lib/index.js lib/api.js lib/span.js lib/event.js > api-docs-temp.js && jsdoc2md -f api-docs-temp.js > docs/api.md && rm api-docs-temp.js",
     "lint": "eslint . --ext .json,.js,.yml --fix --ignore-pattern bench --ignore-pattern test/docker",
     "dev": "dev/start.sh",
@@ -115,6 +116,7 @@
     "supertest": "^3.4.2",
     "tedious": "^14.0.0",
     "testeachversion": "^9.0.0",
+    "typescript": "^4.8.4",
     "winston": "^3.6.0",
     "winston-transport": "^4.5.0",
     "ws": "^7.2.0"

@@ -1,20 +1,20 @@
-import Event from './event'
-import Span from './span'
 import bindings from './addon'
 import log from './loggers'
-import { ClientRequest as HTTPRequest, ServerResponse as HTTPResponse } from 'http'
+import { ClientRequest, IncomingMessage, ServerResponse as HTTPResponse } from 'http'
 import { EventEmitter } from 'events'
 import { Namespace } from 'cls-hooked'
-import express from 'express'
-import hapi from '@hapi/hapi'
-import lambda from 'aws-lambda'
+import * as express from 'express'
+import * as hapi from '@hapi/hapi'
+import * as lambda from 'aws-lambda'
+
+type HTTPRequest = ClientRequest | IncomingMessage
 
 declare namespace apm {
 
 /**
  * Version of the `solarwinds-apm` package
  */
-const version: typeof import('../package.json').version
+const version: string
 /**
  * Root directory of the `solarwinds-apm` package
  */
@@ -422,14 +422,17 @@ function setCustomTxNameFunction(probe: '@hapi/hapi', fn: (request: hapi.Request
  * Event class
  */
 const Event: typeof import('./event')
+type Event = import('./event')
 /**
  * Span class
  */
 const Span: typeof import('./span')
+type Span = import('./span')
 /**
  * Metrics class
  */
 const Metrics: typeof import('./metrics')
+type Metrics = import('./metrics')
 
 /**
  * Checks whether liboboe is ready to sample
@@ -834,7 +837,7 @@ interface Metric {
   /**
    * Value of the metric
    */
-  value: number;
+  value?: number;
   /**
    * Optional tags to attach to the metric
    */
@@ -956,6 +959,7 @@ type LambdaHandler<T, E, C> =
   | ((event: E, context: C, callback: lambda.APIGatewayProxyCallback) => T)
   | ((event: E, context: C) => Promise<T>)
   | ((event: E) => Promise<T>)
+  | lambda.APIGatewayProxyHandler
 
 /**
  * Instruments an AWS Lambda handler
