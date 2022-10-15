@@ -1,3 +1,6 @@
+// This file, and all other *.d.ts files, are manually maintained, not generated. They should be changed any time the public API is.
+// The test/types.test.ts file should also be updated accordingly to ensure the type declarations behave as expected in practice.
+
 import bindings from './addon'
 import log from './loggers'
 import { ClientRequest, IncomingMessage, ServerResponse as HTTPResponse } from 'http'
@@ -579,6 +582,25 @@ function instrumentHttp<T>(
   options: InstrumentOptions,
   res: HTTPResponse,
 ): T
+
+//
+// INSTRUMENTATION FUNCTIONS AND GENERICS
+//
+// The functions declarations for callback-style instrumentation functions
+// make heavy use of generics and all follow the same pattern.
+// This is require to make sure that both the user-provided callback
+// and the library-provided wrapper around it have the same type signature
+// so that the library-provided callback can only be used in places where
+// the user-provided one also can.
+// 
+// `T` represents the return type of the function receiving the library callback.
+// `CT` represents the return type of both callbacks.
+// `CP` represents the parameters type of both callbacks.
+//
+// A `C` generic type could be used instead of AsyncCallback<CT, CP>
+// but isn't to make it clear to users that even though the user and library provided callbacks
+// have the same signature, they are in fact distinct functions.
+//
 
 /**
  * An asynchronous callback
