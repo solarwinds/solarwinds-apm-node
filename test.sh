@@ -147,6 +147,20 @@ if [ "$group_to_run" = "LAMBDA" ] || [ ! "$group_to_run" ]; then executeTestGrou
 #
 if [ "$group_to_run" = "PROBES" ] || [ ! "$group_to_run" ]; then executeTestGroup "PROBES" "test/probes/*.test.js"; fi
 
+#
+# this runs the type definitions tests which use tsc and not mocha
+#
+if [ "$group_to_run" = "TYPES" ] || [ ! "$group_to_run" ] && executeGroup "TYPES"; then
+    if ! tsc --noEmit --esModuleInterop test/types.test.ts; then
+        SUITES_FAILED=$((SUITES_FAILED + 1))
+        GROUPS_FAILED=$((GROUPS_FAILED + 1))
+        addError "$TYPES"
+    else
+        SUITES_PASSED=$((SUITES_PASSED + 1))
+        GROUPS_PASSED=$((GROUPS_PASSED + 1))
+    fi
+fi
+
 #=======================================
 # provide a summary of the test results.
 #=======================================
