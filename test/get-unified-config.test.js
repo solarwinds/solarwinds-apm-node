@@ -683,7 +683,7 @@ describe('get-unified-config', function () {
       process.env.SW_APM_COLLECTOR = endpoint
       const cfg = guc()
 
-      const expected = { metricFormat: 1, endpoint }
+      const expected = { metricFormat: 1, endpoint, certificates: require('../lib/appoptics.crt') }
       doChecks(cfg, { global: expected })
     })
 
@@ -723,7 +723,7 @@ describe('get-unified-config', function () {
       const cfg = guc()
 
       const certificates = require('../lib/appoptics.crt')
-      const expected = { certificates }
+      const expected = { endpoint, certificates, metricFormat: 1 }
       doChecks(cfg, { global: expected })
     })
   })
