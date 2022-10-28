@@ -108,6 +108,7 @@ interface Config {
   reporter?: 'ssl' | 'udp' | 'file';
   endpoint?: string;
   trustedPath?: string;
+  certificates?: string;
   unifiedLogging?: 'always' | 'never' | 'preferred';
   bufferSize?: number;
   logFilePath?: string;

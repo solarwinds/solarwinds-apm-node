@@ -444,7 +444,6 @@ describe('get-unified-config', function () {
     it('should correctly handle env vars with explicit names', function () {
       process.env.SW_APM_DEBUG_LEVEL = 4
       process.env.SW_APM_COLLECTOR = 'apm.collector.st-ssp.solarwinds.com'
-      process.env.SW_APM_TRUSTEDPATH = './certs/special.cert'
 
       const cfg = guc()
 
@@ -452,7 +451,6 @@ describe('get-unified-config', function () {
       const config = {
         logLevel: expectedLogLevel,
         endpoint: process.env.SW_APM_COLLECTOR,
-        trustedPath: process.env.SW_APM_TRUSTEDPATH
       }
       doChecks(cfg, { global: config })
     })
