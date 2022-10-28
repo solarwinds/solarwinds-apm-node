@@ -697,6 +697,38 @@ describe('get-unified-config', function () {
   })
 
   //
+  // trudted path
+  //
+  describe('trustedPath', function () {
+    it('should not set anything by default', function () {
+      const cfg = guc()
+
+      const expected = {}
+      doChecks(cfg, { global: expected })
+    })
+
+    it('should read trustedPath if provided', function () {
+      const trustedPath = './test/certs/java-collector.crt'
+      process.env.SW_APM_TRUSTEDPATH = trustedPath
+      const cfg = guc()
+
+      const certificates = fs.readFileSync(trustedPath, 'utf8')
+      const expected = { trustedPath, certificates }
+      doChecks(cfg, { global: expected })
+    })
+
+    it('should use the appoptics certificate if not provided but appoptics collector', function () {
+      const endpoint = 'collector.appoptics.com'
+      process.env.SW_APM_COLLECTOR = endpoint
+      const cfg = guc()
+
+      const certificates = require('../lib/appoptics.crt')
+      const expected = { certificates }
+      doChecks(cfg, { global: expected })
+    })
+  })
+
+  //
   // probes
   //
   describe('probe settings', function () {
