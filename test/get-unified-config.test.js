@@ -444,7 +444,6 @@ describe('get-unified-config', function () {
     it('should correctly handle env vars with explicit names', function () {
       process.env.SW_APM_DEBUG_LEVEL = 4
       process.env.SW_APM_COLLECTOR = 'apm.collector.st-ssp.solarwinds.com'
-      process.env.SW_APM_TRUSTEDPATH = './certs/special.cert'
 
       const cfg = guc()
 
@@ -452,7 +451,6 @@ describe('get-unified-config', function () {
       const config = {
         logLevel: expectedLogLevel,
         endpoint: process.env.SW_APM_COLLECTOR,
-        trustedPath: process.env.SW_APM_TRUSTEDPATH
       }
       doChecks(cfg, { global: config })
     })
@@ -685,7 +683,7 @@ describe('get-unified-config', function () {
       process.env.SW_APM_COLLECTOR = endpoint
       const cfg = guc()
 
-      const expected = { metricFormat: 1, endpoint }
+      const expected = { metricFormat: 1, endpoint, certificates: require('../lib/appoptics.crt') }
       doChecks(cfg, { global: expected })
     })
 
@@ -694,6 +692,38 @@ describe('get-unified-config', function () {
       const cfg = guc()
 
       const expected = { metricFormat: 1 }
+      doChecks(cfg, { global: expected })
+    })
+  })
+
+  //
+  // trudted path
+  //
+  describe('trustedPath', function () {
+    it('should not set anything by default', function () {
+      const cfg = guc()
+
+      const expected = {}
+      doChecks(cfg, { global: expected })
+    })
+
+    it('should read trustedPath if provided', function () {
+      const trustedPath = './test/certs/java-collector.crt'
+      process.env.SW_APM_TRUSTEDPATH = trustedPath
+      const cfg = guc()
+
+      const certificates = fs.readFileSync(trustedPath, 'utf8')
+      const expected = { trustedPath, certificates }
+      doChecks(cfg, { global: expected })
+    })
+
+    it('should use the appoptics certificate if not provided but appoptics collector', function () {
+      const endpoint = 'collector.appoptics.com'
+      process.env.SW_APM_COLLECTOR = endpoint
+      const cfg = guc()
+
+      const certificates = require('../lib/appoptics.crt')
+      const expected = { endpoint, certificates, metricFormat: 1 }
       doChecks(cfg, { global: expected })
     })
   })
