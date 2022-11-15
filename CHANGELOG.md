@@ -2,6 +2,13 @@
 
 v11.0.0 is the first SolarWinds APM version. Versions prior to v11.0.0 were branded AppOptics APM. See: https://github.com/appoptics/appoptics-apm-node/blob/master/CHANGELOG.md
 
+### v11.2.0
+
+Features
+- Provide TypeScript definitions for most of the API surface
+- Automatically use the AppOptics SSL certificate when using an AppOptics collector
+- Update native bindings to support new certificate handling
+
 ### v11.1.0
 
 Features
