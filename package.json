@@ -1,6 +1,6 @@
 {
   "name": "solarwinds-apm",
-  "version": "11.2.0-prerelease.2",
+  "version": "11.2.0",
   "description": "Agent for SolarWinds APM",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -122,6 +122,6 @@
     "ws": "^7.2.0"
   },
   "optionalDependencies": {
-    "solarwinds-apm-bindings": "^14.0.0-prerelease.1"
+    "solarwinds-apm-bindings": "^14.0.0"
   }
 }
