@@ -154,7 +154,7 @@ if [ "$group_to_run" = "TYPES" ] || [ ! "$group_to_run" ] && executeGroup "TYPES
     if ! tsc --noEmit --esModuleInterop test/types.test.ts; then
         SUITES_FAILED=$((SUITES_FAILED + 1))
         GROUPS_FAILED=$((GROUPS_FAILED + 1))
-        addError "$TYPES"
+        addError "TYPES"
     else
         SUITES_PASSED=$((SUITES_PASSED + 1))
         GROUPS_PASSED=$((GROUPS_PASSED + 1))
@@ -185,7 +185,7 @@ fi
 
 echo "$"
 # shellcheck disable=2059
-if [ ${#ERRORS[*]} -ne 0 ]; then
+if [ ${#ERRORS[@]} -ne 0 ]; then
     printf "${GREEN}$SUITES_PASSED suite${sps} in $GROUPS_PASSED group${gps} passed${NC}\n"
     printf "${RED}$SUITES_FAILED suite${sfs} in $errorCount group${gfs} failed${NC}\n"
     for error in $ERRORS
