@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 group_to_run=$1
 

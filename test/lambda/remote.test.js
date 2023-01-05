@@ -314,7 +314,7 @@ describe(`lambda layer ${apmVersion}, ${aobVersion}, ${autoVersion} works`, func
 
 function checkInit (event) {
   expect(event).property(xt).match(/2B[0-9A-F]{56}0(0|1)/)
-  expect(event).property('__Init').equal(1)
+  expect(event).property('__Init').equal(true)
 
   expect(event).property('TID').a('number')
   expect(event).property('Timestamp_u').a('number')
