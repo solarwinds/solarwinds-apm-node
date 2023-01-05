@@ -14,13 +14,13 @@ group_to_run=$1
 # has been initialized.
 #
 
-ERRORS=""          # list of "GROUP test test test GROUP ..." which failed
+ERRORS=()          # list of "GROUP test test test GROUP ..." which failed
 errorCount=0
 SKIPPED=""         # as above for tests that were skipped
 skipCount=0
 
 addError() {
-  ERRORS="$ERRORS $1"
+  ERRORS+=("$1")
   errorCount=$((errorCount + 1))
 }
 addSkip() {
@@ -188,7 +188,7 @@ echo "$"
 if [ ${#ERRORS[@]} -ne 0 ]; then
     printf "${GREEN}$SUITES_PASSED suite${sps} in $GROUPS_PASSED group${gps} passed${NC}\n"
     printf "${RED}$SUITES_FAILED suite${sfs} in $errorCount group${gfs} failed${NC}\n"
-    for error in $ERRORS
+    for error in "${ERRORS[@]}"
     do
         printf "${RED}    $error${NC}\n"
     done
