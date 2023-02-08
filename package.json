@@ -104,7 +104,7 @@
     "mongoose": "^5.13.9",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
-    "oracledb": "^5.2.0",
+    "oracledb": "https://github.com/oracle/node-oracledb/releases/download/v5.5.0/oracledb-src-5.5.0.tgz",
     "pg": "^8.7.1",
     "pg-native": "^3.0.0",
     "pino": "^7.8.0",
