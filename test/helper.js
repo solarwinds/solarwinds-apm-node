@@ -154,6 +154,10 @@ exports.doChecks = function (emitter, checks, done, opt = {}) {
     if (!emitter.__apmActive) {
       log.test.messages('mock (' + addr.port + ') received message', msg)
     }
+    if (opt.skip && opt.skip(msg)) {
+      return
+    }
+
     const check = checks.shift()
     if (opt.debug) {
       // eslint-disable-next-line no-console
@@ -253,7 +257,7 @@ exports.aggregate = function (emitter, config, done) {
   emitter.on('message', onMessage)
 }
 
-exports.test = function (emitter, test, validations, done) {
+exports.test = function (emitter, test, validations, done, opt = {}) {
   function noop () {}
   // noops skip testing the 'outer' span.
   /*
@@ -282,7 +286,7 @@ exports.test = function (emitter, test, validations, done) {
     delete emitter[apmAggregate]
   } else {
     // check messages as the occur using the validations array.
-    exports.doChecks(emitter, validations, done)
+    exports.doChecks(emitter, validations, done, opt)
   }
 
   apm.requestStore.run(function () {

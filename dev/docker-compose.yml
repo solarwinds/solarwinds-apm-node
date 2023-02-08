@@ -63,7 +63,6 @@ services:
       - "9042:9042"
 
   memcached:
-    platform: linux/amd64
     container_name: "memcached"
     image: memcached 
     ports:
@@ -77,7 +76,6 @@ services:
       - "27017:27017"
 
   mongo_3:
-    platform: linux/amd64
     container_name: "mongo_3"
     image: mongo:3 
     ports:
@@ -85,7 +83,6 @@ services:
       - "27018:27017"
 
   mongo_4:
-    platform: linux/amd64
     container_name: "mongo_4"
     image: mongo:4 
     ports:
@@ -93,7 +90,6 @@ services:
       - "27019:27017"
 
   mongo_5:
-    platform: linux/amd64
     container_name: "mongo_5"
     image: mongo:5 
     ports:
@@ -126,7 +122,6 @@ services:
       - "1521:1521"
 
   postgres:
-    platform: linux/amd64
     container_name: "postgres"
     image: "postgres"
     ports:
@@ -135,7 +130,6 @@ services:
       - POSTGRES_PASSWORD=xyzzy
 
   rabbitmq:
-    platform: linux/amd64
     container_name: "rabbitmq" 
     image: rabbitmq:3-management 
     ports:
@@ -143,7 +137,6 @@ services:
       - "5671:5671"
 
   redis:
-    platform: linux/amd64
     container_name: "redis"
     image: redis  
     ports:

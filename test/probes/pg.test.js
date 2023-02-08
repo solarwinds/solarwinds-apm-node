@@ -3,6 +3,7 @@
 
 const helper = require('../helper')
 const { apm } = require('../1.test-common')
+const semver = require('semver')
 
 const postgres = require('pg')
 const pkg = require('pg/package.json')
@@ -20,6 +21,16 @@ const auth = {
   user: process.env.SW_APM_TEST_POSTGRES_USERNAME || 'postgres',
   password,
   database: 'test'
+}
+
+// pg 8.9.0 replaced its internal crypto implementation for auth with the crypto module
+const usesCrypto = semver.satisfies(pkg.version, '>=8.9.0')
+function skip (msg) {
+  if (usesCrypto && msg.Layer === 'crypto') {
+    return true
+  } else {
+    return false
+  }
 }
 
 let hasNative = false
@@ -242,7 +253,8 @@ describe(`probes.pg ${pkg.version} pg-native ${nativeVer}`, function () {
               emitter,
               subtests[t].cb.test,
               subtests[t].checks,
-              done
+              done,
+              { skip }
             )
           })
 
@@ -251,7 +263,8 @@ describe(`probes.pg ${pkg.version} pg-native ${nativeVer}`, function () {
               emitter,
               subtests[t].p.test,
               subtests[t].checks,
-              done
+              done,
+              { skip }
             )
           })
         }
@@ -269,7 +282,8 @@ describe(`probes.pg ${pkg.version} pg-native ${nativeVer}`, function () {
               emitter,
               subtests[t].cb.test,
               subtests[t].checks,
-              done
+              done,
+              { skip }
             )
           })
 
@@ -278,7 +292,8 @@ describe(`probes.pg ${pkg.version} pg-native ${nativeVer}`, function () {
               emitter,
               subtests[t].p.test,
               subtests[t].checks,
-              done
+              done,
+              { skip }
             )
           })
         }
@@ -324,7 +339,8 @@ describe(`probes.pg ${pkg.version} pg-native ${nativeVer}`, function () {
               emitter,
               subtests[t].cb.test,
               subtests[t].checks,
-              done
+              done,
+              { skip }
             )
           })
 
@@ -333,7 +349,8 @@ describe(`probes.pg ${pkg.version} pg-native ${nativeVer}`, function () {
               emitter,
               subtests[t].p.test,
               subtests[t].checks,
-              done
+              done,
+              { skip }
             )
           })
         }
