@@ -21,8 +21,8 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
 
     steps:
-      - name: Checkout solarwindscloud/solarwinds-bindings-node ${{ github.ref }}
-        uses: actions/checkout@v2
+      - name: Checkout solarwindscloud/solarwinds-bindings-node
+        uses: actions/checkout@v3
         with:
           repository: solarwindscloud/solarwinds-bindings-node
 
@@ -32,7 +32,7 @@ jobs:
         # this workflow runs in the agent repo thus needs to "tweak" environment for correct load.
         run: |
           export GITHUB_REPOSITORY=solarwindscloud/solarwinds-bindings-node
-          .github/scripts/matrix-from-json.sh .github/config/target-group.json
+          .github/scripts/matrix-from-json.sh .github/config/x64-group.json
 
   install-trace:
     name: Install and Trace
@@ -50,7 +50,7 @@ jobs:
 
     steps:
       - name: Checkout ${{ github.ref }}
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Show Environment Info
         run: |
@@ -80,8 +80,8 @@ jobs:
       # in either case, the binary has to be present. if it is not, it is a failed install and the step will fail
       - name: Check Artifacts
         run: |
-          ls node_modules/solarwinds-apm-bindings/dist/napi-v*/apm_bindings.node 
-          ls node_modules/solarwinds-apm-bindings/dist/napi-v*/ao_metrics.node
+          ls node_modules/solarwinds-apm-bindings-*/bindings.node 
+          ls node_modules/solarwinds-apm-bindings-*/metrics.node
         working-directory: .github/utils
 
       # confirms thst server can be instrumented via .readyToSample
