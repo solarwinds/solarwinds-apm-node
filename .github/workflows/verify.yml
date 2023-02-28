@@ -14,7 +14,7 @@ on:
 
 jobs:
   load-test-group:
-    name: Load Target Group Config JSON from Bindings Repo
+    name: Load Test Group Config JSON from Bindings Repo
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix-with-arch }}
@@ -27,7 +27,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: solarwindscloud/solarwinds-bindings-node
-          ref: arm-action
 
       - name: Load test group data
         id: set-matrix
@@ -53,7 +52,7 @@ jobs:
 
       - name: Launch Runners
         id: launch
-        uses: solarwindscloud/ec2-runner-action@instance-retry
+        uses: solarwindscloud/ec2-runner-action@main
         with:
           action: launch
           github-token: ${{ secrets.CI_GITHUB_TOKEN }}
@@ -81,6 +80,14 @@ jobs:
       NODE_ENV: production
 
     steps:
+      # install deps and spoof os-release to get gha to work on arm64 alpine
+      # https://github.com/actions/runner/issues/801#issuecomment-1374967227
+      - name: Prepare Alpine arm64
+        run: |
+          apk add gcompat
+          sed -i "s/ID=alpine/ID=armpine/" /etc/os-release
+        if: ${{ matrix.arch == 'arm64' && contains(matrix.image, 'alpine') }}
+
       - name: Checkout ${{ github.ref }}
         uses: actions/checkout@v3
 
@@ -173,7 +180,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Terminate Runners
-        uses: solarwindscloud/ec2-runner-action@instance-retry
+        uses: solarwindscloud/ec2-runner-action@main
         with:
           action: terminate
           github-token: ${{ secrets.CI_GITHUB_TOKEN }}
