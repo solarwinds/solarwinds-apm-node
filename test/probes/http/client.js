@@ -1,7 +1,8 @@
 'use strict'
 
 exports.data = function (ctx) {
-  return { url: `${ctx.p}://localhost:${ctx.data.port}/?foo=bar` }
+  const auth = ctx.data.auth ? `${ctx.data.auth}@` : ''
+  return { url: `${ctx.p}://${auth}localhost:${ctx.data.port}/?foo=bar` }
 }
 
 exports.run = function (ctx, done) {
