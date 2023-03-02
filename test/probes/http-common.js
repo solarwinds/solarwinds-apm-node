@@ -1014,6 +1014,40 @@ describe(`probes.${p}`, function () {
       })
     })
 
+    it('should filter out auth', function (done) {
+      const server = createServer(options, function (req, res) {
+        res.end('done')
+        server.close()
+      })
+
+      server.listen(function () {
+        ctx.data = { port: server.address().port, auth: 'user:passwd' }
+        const testFunction = helper.run(ctx, 'http/client.js')
+
+        helper.test(emitter, testFunction, [
+          function (msg) {
+            check.client.entry(msg)
+            expect(msg).property('Spec', 'rsc')
+            expect(msg).property('IsService', 'yes')
+            expect(msg).property('RemoteURL')
+
+            expect(ctx.data.url).include(ctx.data.auth)
+            expect(msg.RemoteURL).not.include(ctx.data.auth)
+          },
+          function (msg) {
+            check.server.entry(msg)
+          },
+          function (msg) {
+            check.server.exit(msg)
+          },
+          function (msg) {
+            check.client.exit(msg)
+            expect(msg).property('HTTPStatus', 200)
+          }
+        ], done)
+      })
+    })
+
     it('should support query filtering', function (done) {
       conf.includeRemoteUrlParams = false
 

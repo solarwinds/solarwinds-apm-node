@@ -91,6 +91,20 @@ function makeTests (db_host, host, isReplicaSet) {
     ordered: true
   }
 
+  const hosts = db_host.split(',').map(function (host) {
+    const parts = host.split(':')
+    host = parts.shift()
+    const port = parts.shift()
+    return {
+      host,
+      port: Number(port)
+    }
+  })
+
+  // Connection URL (add trailing to test RemoteHost)
+  const hostStr = `${hosts[0].host}:${hosts[0].port}`
+  const url = `mongodb://${hostStr}/?`
+
   //
   // Intercept messages for analysis
   //
@@ -116,26 +130,10 @@ function makeTests (db_host, host, isReplicaSet) {
   // Open a fresh mongodb connection for each test
   //
   before(function (done) {
-    const hosts = db_host.split(',').map(function (host) {
-      const parts = host.split(':')
-      host = parts.shift()
-      const port = parts.shift()
-      return {
-        host,
-        port: Number(port)
-      }
-    })
-
     apm.loggers.test.debug(`using dbn ${dbn}`)
 
     let server
-
-    const host = hosts[0]
     const mongoOptions = {}
-
-    // Connection URL
-    const url = `mongodb://${host.host}:${host.port}`
-    // const server = new MongoClient(url, { useUnifiedTopology: true })
 
     // server = new mongodb.Server(host.host, host.port)
     const mongoClient = new MongoClient(url, mongoOptions)
@@ -168,7 +166,7 @@ function makeTests (db_host, host, isReplicaSet) {
     base: function (msg) {
       msg.should.have.property('Spec', 'query')
       msg.should.have.property('Flavor', 'mongodb')
-      msg.should.have.property('RemoteHost')
+      msg.should.have.property('RemoteHost', hostStr)
     },
     common: function (msg) {
       msg.should.have.property('Database', `${dbn}`)
