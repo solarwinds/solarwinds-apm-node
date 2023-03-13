@@ -2,11 +2,19 @@
 
 v11.0.0 is the first SolarWinds APM version. Versions prior to v11.0.0 were branded AppOptics APM. See: https://github.com/appoptics/appoptics-apm-node/blob/master/CHANGELOG.md
 
-### Unreleased
+### v12.0.0
 
 Features
+- Support arm64 (also known as armv8 or aarch64)
 - Update init message to latest specification
 - Update native bindings to latest version
+
+Breaking
+- Remove support for RHEL/CentOS 7, Debian Stretch and Ubuntu 16.04 (minimum glibc now 2.27)
+- Remove undocumented partial support for non-LTS Node.js releases
+
+Maintenance
+- Improve RemoteHost and RemoteUrl sanitisation
 
 ### v11.2.0
 
