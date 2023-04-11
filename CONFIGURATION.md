@@ -46,6 +46,7 @@ The configuration file can supply the following properties, showing their defaul
 | Property Name        | Default  | Description |
 | -------------------- | -------- | ----------- |
 |serviceKey||As described above.|
+|endpoint|`'apm.collector.cloud.solarwinds.com:443'`|SSL collector endpoint address and port.|
 |enabled|`true`|If set to false the `solarwinds-apm` agent will disable itself.|
 |proxy||Proxy that does not require authentication: `http://proxy-server:3306`. Proxy that does require Basic Authentication: `http://user:password@proxy-server:3306`.|
 |hostnameAlias||A logical hostname that can be used to easily identify the host.|
@@ -121,6 +122,7 @@ These environment variables may be set:
 
 | Variable Name        | Default  | Description |
 | -------------------- | -------- | ----------- |
+|SW_APM_COLLECTOR|`'apm.collector.cloud.solarwinds.com:443'`|SSL collector endpoint address and port.|
 |SW_APM_ENABLED|`true`|The agent is enabled. Set to `false` to disable.|
 |SW_APM_LOG_SETTINGS|`'error,warn'`|Categories to log. If set this takes precedence over the deprecated DEBUG environment variable. If set to empty it suppresses all agent log messages.|
 |SW_APM_PROXY||Proxy that does not require authentication: `http://proxy-server:3306`. Proxy that does require Basic Authentication: `http://user:password@proxy-server:3306`.|
@@ -129,5 +131,4 @@ These environment variables may be set:
 |SW_APM_TRIGGER_TRACE_ENABLED|`'true'`|Enable the trigger-trace feature. Options are `'true'`, `'false'`|
 |SW_APM_RUNTIME_METRICS|`'true'`|Enable runtime metrics. Options are `'true'`, `'false'`|
 |SW_APM_REPORTER|`'ssl'`|The reporter that will be used throughout the runtime of the app. Possible values: `'ssl'`, `'udp'`. This is used for testing.|
-|SW_APM_COLLECTOR|`'apm.collector.cloud.solarwinds.com'`|SSL collector endpoint address and port. This is typically changed only for testing.|
 |SW_APM_TRUSTEDPATH|built-in|Path to the certificate used to verify the collector endpoint. Used only for testing.|
