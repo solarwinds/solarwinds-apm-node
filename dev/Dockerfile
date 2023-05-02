@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 SHELL ["/bin/bash", "-c"]
 
 # general tools
@@ -8,11 +8,12 @@ RUN apt update \
                 git \
                 nano \
                 g++ \
-                python \
+                python3 \
+                python-is-python3 \
                 make
 
 # set time zone (for github cli)
-ENV TZ=America/Los_Angeles
+ENV TZ=America/Vancouver
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # for github cli
@@ -31,24 +32,24 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | d
 # install nvm
 ENV NVM_DIR /root/.nvm
 
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
 # these are the stable versions as of April 2022
 # can't use lts alias due to all sorts of Dockerfile limitations.
 RUN source $NVM_DIR/nvm.sh \
-    && nvm install v18.0.0 \
-    && nvm install v16.14.2 \
-    && nvm install v14.19.1 \
+    && nvm install v20.0.0 \
+    && nvm install v18.16.0 \
+    && nvm install v16.20.0 \
     && nvm install stable
 
 # add node and npm to path so the commands are available
-ENV NODE_PATH $NVM_DIR/v16.14.2/lib/node_modules
-ENV PATH $NVM_DIR/versions/node/v16.14.2/bin:$PATH
+ENV NODE_PATH $NVM_DIR/v16.20.0/lib/node_modules
+ENV PATH $NVM_DIR/versions/node/v16.20.0/bin:$PATH
 
 # Install tools needed for specific service tests (pg, oracle)
 RUN apt -y install \
             libaio1 \
-            postgresql-server-dev-12 \
+            postgresql-server-dev-all \
             zip \
             unzip
 
