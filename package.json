@@ -10,6 +10,7 @@
     "CONFIGURATION.md"
   ],
   "scripts": {
+    "pretest": "./deps.sh",
     "test": "./test.sh",
     "test:core": "./test.sh CORE",
     "test:probes": "./test.sh PROBES",
@@ -106,7 +107,6 @@
     "mysql": "^2.18.1",
     "oracledb": "https://github.com/oracle/node-oracledb/releases/download/v5.5.0/oracledb-src-5.5.0.tgz",
     "pg": "^8.7.1",
-    "pg-native": "^3.0.0",
     "pino": "^7.8.0",
     "q": "^1.5.1",
     "raw-body": "^2.4.1",
@@ -122,6 +122,6 @@
     "ws": "^7.2.0"
   },
   "optionalDependencies": {
-    "solarwinds-apm-bindings": "^15.0.2"
+    "solarwinds-apm-bindings": "^16.1.0"
   }
 }

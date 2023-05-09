@@ -887,7 +887,9 @@ describe(`probes.${p}`, function () {
       let reached = false
       server.setTimeout(10)
       server.on('timeout', function (res) {
-        res._httpMessage.statusCode = 500
+        if (res._httpMessage) {
+          res._httpMessage.statusCode = 500
+        }
         reached = true
       })
 

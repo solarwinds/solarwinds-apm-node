@@ -2,6 +2,7 @@
 'use strict'
 
 const fs = require('fs')
+const semver = require('semver')
 
 const expect = require('chai').expect
 
@@ -357,7 +358,9 @@ describe('get-unified-config', function () {
 
       const cfg = guc()
 
-      const message = 'Unexpected token \n in JSON at position 11'
+      const message = semver.gte(process.versions.node, '20.0.0')
+        ? 'Bad control character in string literal in JSON at position 11'
+        : 'Unexpected token \n in JSON at position 11'
       const errors = [`Cannot read config file ${rootConfigName}: ${rootConfigName}.json: ${message}`]
       doChecks(cfg, { errors })
     })
@@ -427,7 +430,9 @@ describe('get-unified-config', function () {
 
       const cfg = guc()
 
-      const message = 'Unexpected token \n in JSON at position 11'
+      const message = semver.gte(process.versions.node, '20.0.0')
+        ? 'Bad control character in string literal in JSON at position 11'
+        : 'Unexpected token \n in JSON at position 11'
       const errors = [
         `Cannot read config file ${rootConfigName}: ${rootConfigName}.json: ${message}`
       ]
@@ -450,7 +455,7 @@ describe('get-unified-config', function () {
       const expectedLogLevel = +process.env.SW_APM_DEBUG_LEVEL
       const config = {
         logLevel: expectedLogLevel,
-        endpoint: process.env.SW_APM_COLLECTOR,
+        endpoint: process.env.SW_APM_COLLECTOR
       }
       doChecks(cfg, { global: config })
     })

@@ -111,7 +111,7 @@ executeTestGroup() {
 
 # CI environments (github actions in particular) seem to intermittently
 # take a long time.
-[ -n "$CI" ] && timeout="--timeout=10000"
+[ -n "$CI" ] && timeout="--timeout=30000"
 
 #
 # run unit tests with the addon enabled
@@ -137,7 +137,7 @@ if [ "$group_to_run" = "COMPOSITE" ] || [ ! "$group_to_run" ]; then executeTestG
 #
 # this group has lambda-specific tests
 #
-if [ "$group_to_run" = "LAMBDA" ] || [ ! "$group_to_run" ]; then executeTestGroup "LAMBDA" "test/lambda/*.test.js"; fi
+if [ "$group_to_run" = "LAMBDA" ] || [ ! "$group_to_run" ]; then executeTestGroup "LAMBDA" "test/lambda/*.test.js" "$timeout"; fi
 
 #
 # run the probe tests
@@ -145,7 +145,7 @@ if [ "$group_to_run" = "LAMBDA" ] || [ ! "$group_to_run" ]; then executeTestGrou
 # they are last because at least one test might not close emitters or timers. that test causes
 # node to hang.
 #
-if [ "$group_to_run" = "PROBES" ] || [ ! "$group_to_run" ]; then executeTestGroup "PROBES" "test/probes/*.test.js"; fi
+if [ "$group_to_run" = "PROBES" ] || [ ! "$group_to_run" ]; then executeTestGroup "PROBES" "test/probes/*.test.js" "$timeout"; fi
 
 #
 # this runs the type definitions tests which use tsc and not mocha
