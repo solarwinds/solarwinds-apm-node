@@ -2,7 +2,9 @@
 node version 16
 ============================================================
 @hapi/hapi
+  20.1.2-20.3.0
 @hapi/vision
+  5.5.0-6.1.0
 amqplib
   0.2.1-0.3.2
   0.4.1-0.5.3
@@ -48,6 +50,8 @@ memcached
 mongodb
   3.3.0-3.7.3
   4.7.0-4.8.1
+mongoose
+  5.7.0-5.13.17
 morgan
   1.6.0-1.10.0
 mysql
@@ -78,7 +82,9 @@ zlib
 node version 18
 ============================================================
 @hapi/hapi
+  20.1.2-20.3.0
 @hapi/vision
+  5.5.0-6.1.0
 amqplib
   0.2.1-0.3.2
   0.4.1-0.5.3
@@ -125,6 +131,8 @@ memcached
 mongodb
   3.3.0-3.7.3
   4.7.0-4.8.1
+mongoose
+  5.7.0-5.13.17
 morgan
   1.6.0-1.10.0
 mysql
@@ -154,7 +162,9 @@ zlib
 node version 20
 ============================================================
 @hapi/hapi
+  20.1.2-20.3.0
 @hapi/vision
+  5.5.0-6.1.0
 amqplib
   0.2.1-0.3.2
   0.4.1-0.5.3
@@ -182,6 +192,7 @@ generic-pool
 http
   v20.1.0
 https
+  v20.1.0
 koa-resource-router
   0.1.0-0.4.0
 koa-route
@@ -200,11 +211,12 @@ memcached
 mongodb
   3.3.0-3.7.3
   4.7.0-4.8.1
+mongoose
+  5.7.0-5.13.17
 morgan
   1.6.0-1.10.0
 mysql
   2.1.1-2.18.1
-oracledb
 pg
   8.0.3-8.10.0
 pino
