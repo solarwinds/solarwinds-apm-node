@@ -52,7 +52,7 @@
   "dependencies": {
     "ace-context": "^1.0.1",
     "debug": "^4.3.4",
-    "semver": "^7.3.5",
+    "semver": "^7.5.2",
     "shimmer": "^1.2.1"
   },
   "devDependencies": {
