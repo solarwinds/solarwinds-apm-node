@@ -1,6 +1,6 @@
 {
   "name": "solarwinds-apm",
-  "version": "13.0.0",
+  "version": "13.1.0",
   "description": "Agent for SolarWinds APM",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
