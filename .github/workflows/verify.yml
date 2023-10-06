@@ -6,11 +6,11 @@ on:
     types: [completed]
 
   workflow_dispatch:
-    inputs: 
+    inputs:
       solarwinds-version:
         required: false
-        description: 'solarwinds-apm version (e.g. solarwinds-apm@prerelease)'
-        default: 'solarwinds-apm@latest'
+        description: "solarwinds-apm version (e.g. solarwinds-apm@prerelease)"
+        default: "solarwinds-apm@latest"
 
 jobs:
   load-test-group:
@@ -49,13 +49,19 @@ jobs:
           aws-access-key-id: ${{ secrets.CI_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.CI_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+      - name: Setup GitHub Token
+        uses: getsentry/action-github-app-token@v2
+        id: github-token
+        with:
+          app_id: ${{ vars.APPLICATION_ID }}
+          private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
 
       - name: Launch Runners
         id: launch
         uses: solarwindscloud/ec2-runner-action@main
         with:
           action: launch
-          github-token: ${{ secrets.CI_GITHUB_TOKEN }}
+          github-token: ${{ steps.github-token.outputs.token }}
           matrix: ${{ needs.load-test-group.outputs.arm64-images }}
           runner-user: github
           runner-directory: /gh
@@ -73,7 +79,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJson(needs.load-test-group.outputs.matrix) }}
     container:
-      image:  ${{ matrix.image }}
+      image: ${{ matrix.image }}
 
     env:
       # workflow is "simulating" an end user
@@ -178,10 +184,16 @@ jobs:
           aws-access-key-id: ${{ secrets.CI_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.CI_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+      - name: Setup GitHub Token
+        uses: getsentry/action-github-app-token@v2
+        id: github-token
+        with:
+          app_id: ${{ vars.APPLICATION_ID }}
+          private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
 
       - name: Terminate Runners
         uses: solarwindscloud/ec2-runner-action@main
         with:
           action: terminate
-          github-token: ${{ secrets.CI_GITHUB_TOKEN }}
+          github-token: ${{ steps.github-token.outputs.token }}
           matrix: ${{ needs.launch-arm64.outputs.matrix }}
