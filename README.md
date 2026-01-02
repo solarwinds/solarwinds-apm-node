@@ -1,4 +1,7 @@
 # SolarWinds APM
+> [!CAUTION]
+> This is the repository for `solarwinds-apm` versions below 14, which is now obsolete and unmaintained.
+> Please upgrade to the OpenTelemetry-based `solarwinds-apm` located at https://github.com/solarwinds/apm-js.
 
 The `solarwinds-apm` module provides [SolarWinds](https://www.solarwinds.com) instrumentation for Node.js.
 
